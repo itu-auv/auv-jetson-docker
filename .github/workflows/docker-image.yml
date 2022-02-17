@@ -40,7 +40,7 @@ jobs:
           build-args: |
             ROS_DISTRO=melodic 
             ROS_PKG=desktop_full 
-            BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.5.0
+            BASE_IMAGE=nvcr.io/nvidia/l4t-ml:r32.6.1-py3
           push: true
           no-cache: ${{ steps.apt.outputs.no_cache || github.event_name == 'workflow_dispatch' }}
           cache-from: type=registry,ref=${{ env.GH_IMAGE }}
