@@ -68,7 +68,7 @@ RUN apt-get update && \
 
 
 #
-# download/build the ROS source
+# download the ROS source
 #
 RUN mkdir ros_catkin_ws && \
     cd ros_catkin_ws && \
@@ -76,10 +76,12 @@ RUN mkdir ros_catkin_ws && \
     mkdir src && \
     vcs import --input ${ROS_DISTRO}-${ROS_PKG}.rosinstall ./src && \
     apt-get update && \
-    rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl -y && \
-    python3 ./src/catkin/bin/catkin_make_isolated --install --install-space ${ROS_ROOT} -DCMAKE_BUILD_TYPE=Release && \
-    rm -rf /var/lib/apt/lists/*
+    rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge -y
 
+#
+# build ROS source
+#
+RUN python3 ./src/catkin/bin/catkin_make_isolated --install --install-space ${ROS_ROOT} -DCMAKE_BUILD_TYPE=Release
 
 #
 # setup entrypoint
