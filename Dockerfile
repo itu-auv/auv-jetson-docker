@@ -20,7 +20,8 @@
 # this dockerfile roughly follows the 'Installing from source' from:
 #   http://wiki.ros.org/melodic/Installation/Source
 #
-ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.5.0
+# ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.5.0
+ARG BASE_IMAGE=nvcr.io/nvidia/l4t-ml:r32.6.1-py3
 FROM ${BASE_IMAGE}
 
 ARG ROS_PKG=ros_base
