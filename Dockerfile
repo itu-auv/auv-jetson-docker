@@ -87,7 +87,7 @@ COPY ./melodic-desktop_full.rosinstall ./melodic-desktop_full.rosinstall
 #
 RUN mkdir src && \
     vcs import --input ${ROS_DISTRO}-${ROS_PKG}.rosinstall ./src && \
-    apt-get update && \
+    apt-get update
     
 #
 # rosdep install
