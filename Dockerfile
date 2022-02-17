@@ -68,15 +68,31 @@ RUN apt-get update && \
 
 
 #
-# download the ROS source
+# create workspace
 #
 RUN mkdir ros_catkin_ws && \
-    cd ros_catkin_ws && \
-    rosinstall_generator ${ROS_PKG} vision_msgs --rosdistro ${ROS_DISTRO} --deps --tar > ${ROS_DISTRO}-${ROS_PKG}.rosinstall && \
-    mkdir src && \
+    cd ros_catkin_ws
+
+#
+# copy rosinstall file
+#
+COPY ./melodic-desktop_full.rosinstall ./melodic-desktop_full.rosinstall
+
+#
+# rosinstall_generator ${ROS_PKG} vision_msgs --rosdistro ${ROS_DISTRO} --deps --tar > ${ROS_DISTRO}-${ROS_PKG}.rosinstall && \
+#
+
+#
+# download ros source
+#
+RUN mkdir src && \
     vcs import --input ${ROS_DISTRO}-${ROS_PKG}.rosinstall ./src && \
     apt-get update && \
-    rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge -y
+    
+#
+# rosdep install
+#
+RUN rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge -y
 
 #
 # build ROS source
