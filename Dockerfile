@@ -84,8 +84,8 @@ RUN mkdir ros_catkin_ws && \
 #
 # setup entrypoint
 #
-COPY ./packages/ros_entrypoint.sh /ros_entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 RUN echo 'source /opt/ros/${ROS_DISTRO}/setup.bash' >> /root/.bashrc
-ENTRYPOINT ["/ros_entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]
 WORKDIR /
