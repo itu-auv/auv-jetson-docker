@@ -95,8 +95,8 @@ RUN mkdir src && \
 #
 RUN find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/find_package(Boost REQUIRED python37)/find_package(Boost REQUIRED python3)/g" {} \; && \
     find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/find_package(Boost REQUIRED python)/find_package(Boost REQUIRED python3)/g" {} \; && \ 
-    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/static void \* do_numpy_import( )/static void do_numpy_import( )/g" {} \; && \
-    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/return nullptr;/return;/g" {} \;
+    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/static void \* do_numpy_import( )/static int do_numpy_import( )/g" {} \; && \
+    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/return nullptr;//g" {} \;
 
 #
 # rosdep install
