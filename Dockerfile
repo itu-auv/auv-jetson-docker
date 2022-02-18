@@ -89,7 +89,15 @@ COPY ./melodic-desktop_full.rosinstall ./melodic-desktop_full.rosinstall
 RUN mkdir src && \
     vcs import --input ${ROS_DISTRO}-${ROS_PKG}.rosinstall ./src && \
     apt-get update
-    
+
+#
+# replacing python37 with python3 to fix 
+#
+RUN find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/find_package(Boost REQUIRED python37)/find_package(Boost REQUIRED python3)/g" {} && \
+    find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/find_package(Boost REQUIRED python)/find_package(Boost REQUIRED python3)/g" {} && \ 
+    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/static void \* do_numpy_import( )/static void do_numpy_import( )/g" {} && \
+    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/return nullptr;/return;/g" {}
+
 #
 # rosdep install
 #
