@@ -908,16 +908,16 @@
     version: vision_msgs-release-release-melodic-vision_msgs-0.0.1-0
 - tar:
     local-name: vision_opencv/cv_bridge
-    uri: https://github.com/ros-gbp/vision_opencv-release/archive/release/melodic/cv_bridge/1.13.0-0.tar.gz
-    version: vision_opencv-release-release-melodic-cv_bridge-1.13.0-0
+    uri: https://github.com/ros-gbp/vision_opencv-release/archive/release/noetic/cv_bridge/1.16.0-1.tar.gz
+    version: vision_opencv-release-release-noetic-cv_bridge-1.16.0-1
 - tar:
     local-name: vision_opencv/image_geometry
-    uri: https://github.com/ros-gbp/vision_opencv-release/archive/release/melodic/image_geometry/1.13.0-0.tar.gz
-    version: vision_opencv-release-release-melodic-image_geometry-1.13.0-0
+    uri: https://github.com/ros-gbp/vision_opencv-release/archive/release/noetic/image_geometry/1.16.0-1.tar.gz
+    version: vision_opencv-release-release-noetic-image_geometry-1.16.0-1
 - tar:
     local-name: vision_opencv/vision_opencv
-    uri: https://github.com/ros-gbp/vision_opencv-release/archive/release/melodic/vision_opencv/1.13.0-0.tar.gz
-    version: vision_opencv-release-release-melodic-vision_opencv-1.13.0-0
+    uri: https://github.com/ros-gbp/vision_opencv-release/archive/release/noetic/vision_opencv/1.16.0-1.tar.gz
+    version: vision_opencv-release-release-noetic-vision_opencv-1.16.0-1
 - tar:
     local-name: visualization_tutorials/interactive_marker_tutorials
     uri: https://github.com/ros-gbp/visualization_tutorials-release/archive/release/melodic/interactive_marker_tutorials/0.10.5-1.tar.gz
