@@ -97,9 +97,9 @@ RUN find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/f
     find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/find_package(Boost REQUIRED python)/find_package(Boost REQUIRED python3)/g" {} \; && \ 
     find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/static void \* do_numpy_import( )/static int do_numpy_import( )/g" {} \; && \
     find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/return nullptr;//g" {} \; && \
-    sed -i "s/CV_LOAD_IMAGE_UNCHANGED/cv::IMREAD_UNCHANGED/g" src/image_transport_plugins/compressed_depth_image_transport/src/codec.cpp \; && \
-    sed -i "s/CV_IMWRITE_PNG_COMPRESSION/cv::IMWRITE_PNG_COMPRESSION/g" src/image_transport_plugins/compressed_image_transport/src/compressed_publisher.cpp \; && \
-    sed -i "s/CV_IMWRITE_JPEG_QUALITY/cv::IMWRITE_JPEG_QUALITY/g" src/image_transport_plugins/compressed_image_transport/src/compressed_publisher.cpp \;
+    sed -i "s/CV_LOAD_IMAGE_UNCHANGED/cv::IMREAD_UNCHANGED/g" src/image_transport_plugins/compressed_depth_image_transport/src/codec.cpp && \
+    sed -i "s/CV_IMWRITE_PNG_COMPRESSION/cv::IMWRITE_PNG_COMPRESSION/g" src/image_transport_plugins/compressed_image_transport/src/compressed_publisher.cpp && \
+    sed -i "s/CV_IMWRITE_JPEG_QUALITY/cv::IMWRITE_JPEG_QUALITY/g" src/image_transport_plugins/compressed_image_transport/src/compressed_publisher.cpp
 
 
 #
