@@ -288,36 +288,36 @@
     version: image_common-release-release-melodic-polled_camera-1.11.13-0
 - tar:
     local-name: image_pipeline/camera_calibration
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/camera_calibration/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-camera_calibration-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/camera_calibration/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-camera_calibration-1.16.0-1
 - tar:
     local-name: image_pipeline/depth_image_proc
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/depth_image_proc/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-depth_image_proc-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/depth_image_proc/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-depth_image_proc-1.16.0-1
 - tar:
     local-name: image_pipeline/image_pipeline
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/image_pipeline/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-image_pipeline-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/image_pipeline/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-image_pipeline-1.16.0-1
 - tar:
     local-name: image_pipeline/image_proc
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/image_proc/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-image_proc-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/image_proc/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-image_proc-1.16.0-1
 - tar:
     local-name: image_pipeline/image_publisher
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/image_publisher/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-image_publisher-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/image_publisher/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-image_publisher-1.16.0-1
 - tar:
     local-name: image_pipeline/image_rotate
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/image_rotate/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-image_rotate-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/image_rotate/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-image_rotate-1.16.0-1
 - tar:
     local-name: image_pipeline/image_view
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/image_view/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-image_view-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/image_view/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-image_view-1.16.0-1
 - tar:
     local-name: image_pipeline/stereo_image_proc
-    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/melodic/stereo_image_proc/1.15.0-1.tar.gz
-    version: image_pipeline-release-release-melodic-stereo_image_proc-1.15.0-1
+    uri: https://github.com/ros-gbp/image_pipeline-release/archive/release/noetic/stereo_image_proc/1.16.0-1.tar.gz
+    version: image_pipeline-release-release-noetic-stereo_image_proc-1.16.0-1
 - tar:
     local-name: image_transport_plugins/compressed_depth_image_transport
     uri: https://github.com/ros-gbp/image_transport_plugins-release/archive/release/melodic/compressed_depth_image_transport/1.9.5-0.tar.gz
