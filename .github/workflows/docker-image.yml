@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       GH_IMAGE: ghcr.io/itu-auv/auv-jetson-docker:melodic-${{ github.job }}
+      BASE_IMAGE: nvcr.io/nvidia/l4t-ml:r32.6.1-py3
+      ROS_DISTRO: melodic
+      ROS_PKG: desktop_full
     steps:
       # Checkout
       - name: Checkout 
@@ -32,15 +35,16 @@ jobs:
       
       # Build & Push Docker Image
       - name: Build and push
+        timeout-minutes: 1200
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
           platforms: linux/arm64
           build-args: |
-            ROS_DISTRO=melodic 
-            ROS_PKG=desktop_full 
-            BASE_IMAGE=nvcr.io/nvidia/l4t-ml:r32.6.1-py3
+            ROS_DISTRO=${{ env.ROS_DISTRO }} 
+            ROS_PKG=${{ env.ROS_PKG }} 
+            BASE_IMAGE=${{ env.BASE_IMAGE }}
           push: true
           no-cache: ${{ steps.apt.outputs.no_cache || github.event_name == 'workflow_dispatch' }}
           cache-from: type=registry,ref=${{ env.GH_IMAGE }}
