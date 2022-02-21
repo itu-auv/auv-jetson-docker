@@ -164,8 +164,8 @@
     version: gazebo_ros_pkgs-release-release-melodic-gazebo_msgs-2.8.7-1
 - tar:
     local-name: gazebo_ros_pkgs/gazebo_plugins
-    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_plugins/2.8.7-1.tar.gz
-    version: gazebo_ros_pkgs-release-release-melodic-gazebo_plugins-2.8.7-1
+    uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/noetic/gazebo_plugins/2.9.2-1.tar.gz
+    version: gazebo_ros_pkgs-release-release-noetic-gazebo_plugins-2.9.2-1
 - tar:
     local-name: gazebo_ros_pkgs/gazebo_ros
     uri: https://github.com/ros-gbp/gazebo_ros_pkgs-release/archive/release/melodic/gazebo_ros/2.8.7-1.tar.gz
