@@ -20,11 +20,12 @@
 # this dockerfile roughly follows the 'Installing from source' from:
 #   http://wiki.ros.org/melodic/Installation/Source
 #
-ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.5.0
+# ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.5.0
+ARG BASE_IMAGE=ghcr.io/itu-auv/auv-jetson-docker:noetic-base
 FROM ${BASE_IMAGE}
 
 ARG ROS_PKG=ros_base
-ENV ROS_DISTRO=melodic
+ENV ROS_DISTRO=noetic
 ENV ROS_ROOT=/opt/ros/${ROS_DISTRO}
 ENV ROS_PYTHON_VERSION=3
 
@@ -32,6 +33,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /workspace
 
+# RUN ln -sf /usr/bin/python3 /usr/bin/python && \
+#     ln -sf /usr/bin/pip3 /usr/bin/pip
+#     # update-alternatives --remove python /usr/bin/python2
+#     # update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
 #
 # add the ROS deb repo to the apt sources list
@@ -39,14 +44,13 @@ WORKDIR /workspace
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
           git \
-		cmake \
-		build-essential \
-		curl \
-		wget \
-		gnupg2 \
-		lsb-release \
-		ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+          cmake \
+          build-essential \
+          curl \
+          wget \
+          gnupg2 \
+          lsb-release \
+          ca-certificates
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
@@ -62,37 +66,56 @@ RUN apt-get update && \
           python3-rosinstall-generator \
           python3-vcstool \
           build-essential && \
-    rosdep init && \
-    rosdep update && \
-    rm -rf /var/lib/apt/lists/*
-
+    rosdep update
 
 #
-# create workspace
+# move to workspace
 #
-RUN mkdir ros_catkin_ws && \
-    cd ros_catkin_ws
+WORKDIR /workspace/ros_catkin_ws
 
 #
 # copy rosinstall file
 #
-COPY ./melodic-desktop_full.rosinstall ./melodic-desktop_full.rosinstall
+RUN rm -rf build_isolated install_isolated devel_isolated src
 
 #
 # rosinstall_generator ${ROS_PKG} vision_msgs --rosdistro ${ROS_DISTRO} --deps --tar > ${ROS_DISTRO}-${ROS_PKG}.rosinstall && \
 #
+RUN rosinstall_generator robot robot_localization perception vision_msgs joy imu_filter_madgwick rosserial --rosdistro ${ROS_DISTRO} --deps --tar > rosinstall.repos
 
 #
 # download ros source
 #
 RUN mkdir src && \
-    vcs import --input ${ROS_DISTRO}-${ROS_PKG}.rosinstall ./src && \
-    apt-get update && \
-    
+    vcs import --input rosinstall.repos ./src && \
+    apt-get update
+
+#
+# replacing python37 with python3 to fix (sedmagic)
+#
+RUN find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/find_package(Boost REQUIRED python37)/find_package(Boost REQUIRED python3)/g" {} \; && \
+    find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/find_package(Boost REQUIRED python)/find_package(Boost REQUIRED python3)/g" {} \; && \ 
+    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/static void \* do_numpy_import( )/static int do_numpy_import( )/g" {} \; && \
+    find ./src/vision_opencv -name "module.hpp" -exec sed -i -e "s/return nullptr;//g" {} \; && \
+    sed -i "s/CV_LOAD_IMAGE_UNCHANGED/cv::IMREAD_UNCHANGED/g" src/image_transport_plugins/compressed_depth_image_transport/src/codec.cpp && \
+    sed -i "s/CV_IMWRITE_PNG_COMPRESSION/cv::IMWRITE_PNG_COMPRESSION/g" src/image_transport_plugins/compressed_image_transport/src/compressed_publisher.cpp && \
+    sed -i "s/CV_IMWRITE_JPEG_QUALITY/cv::IMWRITE_JPEG_QUALITY/g" src/image_transport_plugins/compressed_image_transport/src/compressed_publisher.cpp
+
+
+RUN apt-get install -y \
+        python3-opengl \
+        python3-mock \
+        python3-rospkg \
+        python3-catkin-pkg \
+        python3-catkin-tools \
+        nano \
+        iputils-ping \
+        net-tools
+
 #
 # rosdep install
 #
-RUN rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge -y
+RUN rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge --skip-keys=python-opengl --skip-keys=python-mock --skip-keys=python-rospkg --skip-keys=python-catkin-pkg -y
 
 #
 # build ROS source
