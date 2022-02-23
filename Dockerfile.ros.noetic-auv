@@ -23,13 +23,19 @@ RUN source /opt/ros/noetic/setup.bash && \
     rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys=python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge -y && \
     catkin build -DPYTHON_VERSION=3.6 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DCMAKE_BUILD_TYPE=Release
 
-RUN pip3 install tqdm
+WORKDIR /workspace
+
+RUN pip3 install tqdm && \
+    git clone https://github.com/Teledyne-Marine/Wayfinder.git && \
+    cd Wayfinder && \
+    python3 setup.py install
 
 #
 # setup entrypoint
 #
 COPY ./entrypoint.sh /entrypoint.sh
 RUN echo 'source /opt/ros/${ROS_DISTRO}/setup.bash' >> /root/.bashrc
+RUN echo 'source /auv_ws/devel/setup.bash' >> /root/.bashrc
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]
 WORKDIR /
