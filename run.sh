@@ -4,6 +4,7 @@ HOSTNAME=jetson
 HOST_BAGDIR=/home/nvidia/bags
 DOCKER_BAGDIR=/bags
 AUV_IMAGE=ghcr.io/itu-auv/auv-jetson-docker:noetic-auv
+CONTAINER_ID=$(sudo docker container list | grep ghcr.io/itu-auv/auv-jetson-docker:noetic-auv | awk '{print $1}')
 
 function check_usb () {
   if [ ! -z $1 ]; then
@@ -35,5 +36,13 @@ do
     DOCKER_DEVICE_ARGS="$DOCKER_DEVICE_ARGS --device $value" 
 done
 
+if [ ! -z $1 ]; then
+  if [ $1 == "shell" ]; then
+    sudo docker exec -it $CONTAINER_ID bash 
+  fi
+fi
+
 # sudo docker run -h $HOSTNAME -it -p 11311:11311 $DOCKER_DEVICE_ARGS --mount src=$HOST_BAGDIR,target=$DOCKER_BAGDIR,type=bind $AUV_IMAGE
 sudo docker run -h $HOSTNAME -it --network host -p 11311:11311 $DOCKER_DEVICE_ARGS --mount src=$HOST_BAGDIR,target=$DOCKER_BAGDIR,type=bind $AUV_IMAGE
+
+
