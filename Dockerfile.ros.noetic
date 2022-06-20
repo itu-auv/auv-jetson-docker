@@ -102,7 +102,8 @@ RUN find ./src/vision_opencv -type f -name "CMakeLists.txt" -exec sed -i -e "s/f
     sed -i "s/CV_IMWRITE_JPEG_QUALITY/cv::IMWRITE_JPEG_QUALITY/g" src/image_transport_plugins/compressed_image_transport/src/compressed_publisher.cpp
 
 
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
         python3-opengl \
         python3-mock \
         python3-rospkg \
@@ -121,6 +122,18 @@ RUN rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro 
 # build ROS source
 #
 RUN python3 ./src/catkin/bin/catkin_make_isolated --install --install-space ${ROS_ROOT} -DCMAKE_BUILD_TYPE=Release
+
+#
+# install Boost 1.71.0
+#
+RUN wget https://boostorg.jfrog.io/artifactory/main/release/1.71.0/source/boost_1_71_0.tar.bz2 && \
+    tar --bzip2 -xf boost_1_71_0.tar.bz2 && \
+    cd boost_1_71_0 && \
+    ./bootstrap.sh --prefix=/usr && \
+    ./b2 && \
+    ./b2 install && \
+    cd .. && \
+    rm -rf boost_1_71_0
 
 #
 # setup entrypoint
