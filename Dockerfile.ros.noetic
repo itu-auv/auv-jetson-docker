@@ -66,7 +66,9 @@ RUN apt-get update && \
           python3-rosinstall-generator \
           python3-vcstool \
           build-essential && \
-    rosdep update
+    rosdep update && \
+    rm -rf /var/lib/apt/lists/*
+
 
 #
 # move to workspace
@@ -87,8 +89,7 @@ RUN rosinstall_generator robot robot_localization perception vision_msgs joy imu
 # download ros source
 #
 RUN mkdir src && \
-    vcs import --input rosinstall.repos ./src && \
-    apt-get update
+    vcs import --input rosinstall.repos ./src
 
 #
 # replacing python37 with python3 to fix (sedmagic)
@@ -109,15 +110,21 @@ RUN apt-get update && \
         python3-rospkg \
         python3-catkin-pkg \
         python3-catkin-tools \
+        python3-argcomplete \
+        python3-smbus \
         nano \
         iputils-ping \
-        net-tools
+        net-tools && \
+    rm -rf /var/lib/apt/lists/*
 
 #
 # rosdep install
 #
-RUN rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge --skip-keys=python-opengl --skip-keys=python-mock --skip-keys=python-rospkg --skip-keys=python-catkin-pkg -y
+RUN apt-get update && \
+    rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro ${ROS_DISTRO} --skip-keys python3-pykdl --skip-keys=libopencv-dev --skip-keys=cv_bridge --skip-keys=python-opengl --skip-keys=python-mock --skip-keys=python-rospkg --skip-keys=python3-opencv --skip-keys=python-catkin-pkg -y && \
+    rm -rf /var/lib/apt/lists/*
 
+    
 #
 # build ROS source
 #
