@@ -28,6 +28,11 @@ ACTIVE_DEVICES+=($(check_usb /dev/auv_dvl))
 ACTIVE_DEVICES+=($(check_usb /dev/auv_mainboard_debug))
 ACTIVE_DEVICES+=($(check_usb /dev/auv_imu))
 ACTIVE_DEVICES+=($(check_usb /dev/auv_cam_front))
+ACTIVE_DEVICES+=($(check_usb /dev/auv_cam_bottom))
+ACTIVE_DEVICES+=($(check_usb /dev/auv_quaduart_0))
+ACTIVE_DEVICES+=($(check_usb /dev/auv_quaduart_1))
+ACTIVE_DEVICES+=($(check_usb /dev/auv_quaduart_2))
+ACTIVE_DEVICES+=($(check_usb /dev/auv_quaduart_3))
 
 DOCKER_DEVICE_ARGS=""
 
@@ -43,6 +48,7 @@ if [ ! -z $1 ]; then
 fi
 
 # sudo docker run -h $HOSTNAME -it -p 11311:11311 $DOCKER_DEVICE_ARGS --mount src=$HOST_BAGDIR,target=$DOCKER_BAGDIR,type=bind $AUV_IMAGE
-sudo docker run -h $HOSTNAME -it --network host -p 11311:11311 $DOCKER_DEVICE_ARGS --mount src=$HOST_BAGDIR,target=$DOCKER_BAGDIR,type=bind $AUV_IMAGE
+## sudo docker run -h $HOSTNAME -it --network host -p 11311:11311 $DOCKER_DEVICE_ARGS --device /dev/i2c-1 --mount src=$HOST_BAGDIR,target=$DOCKER_BAGDIR,type=bind --mount src=/home/nvidia/auv-jetson-docker-noetic/auv-software,target=/auv_ws/src/auv_software,type=bind $AUV_IMAGE
+sudo docker run -h $HOSTNAME --rm -it --privileged --network host -p 11311:11311 -v "/dev:/dev:rw" --device /dev/i2c-1 --mount src=$HOST_BAGDIR,target=$DOCKER_BAGDIR,type=bind --mount src=/home/nvidia/auv-jetson-docker-noetic/auv-software,target=/auv_ws/src/auv_software,type=bind $AUV_IMAGE
 
 
