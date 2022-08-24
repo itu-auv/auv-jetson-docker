@@ -142,6 +142,10 @@ RUN wget https://boostorg.jfrog.io/artifactory/main/release/1.71.0/source/boost_
     cd .. && \
     rm -rf boost_1_71_0
 
+COPY ./Wayfinder Wayfinder
+RUN ls
+RUN cd Wayfinder && python3 setup.py install
+
 #
 # setup entrypoint
 #

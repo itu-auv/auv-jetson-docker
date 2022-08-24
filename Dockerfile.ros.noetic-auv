@@ -10,10 +10,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /workspace
 
-RUN pip3 install tqdm && \
-    git clone https://github.com/Teledyne-Marine/Wayfinder.git && \
-    cd Wayfinder && \
-    python3 setup.py install
+RUN pip3 install tqdm
 
 WORKDIR /
 
